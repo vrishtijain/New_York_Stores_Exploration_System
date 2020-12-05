@@ -7,15 +7,15 @@ from sqlalchemy import create_engine
 from pymongo import MongoClient
 import json
 
-
+def convertToInt(d):
+    return int(float(d))
 def load_into_database():
-    engine = create_engine('postgresql+psycopg2://project:project@127.0.0.1:5432/project')
+    
 
 
-    def convertToInt(d):
-
-        return int(float(d))
-
+   
+    engine = create_engine(
+        'postgresql+psycopg2://project:project@127.0.0.1:5432/project')
     g_county_zip = pd.read_csv('./code/datasets/global_county_zip_code.csv')
 
 
@@ -34,7 +34,7 @@ def load_into_database():
 
 
     # retail_food_stores
-    r_food = pd.read_csv('./code/datasets/retail_food_stores.csv')
+    r_food = pd.read_csv('./code/datasets/retail_food_stores_short.csv')
 
     r_food = r_food.set_index('License Number', drop=True)
 
