@@ -1,11 +1,11 @@
-DROP DATABASE IF EXISTS project;
-CREATE DATABASE project;
+-- DROP DATABASE IF EXISTS project;
+-- CREATE DATABASE project;
 
-DROP USER IF EXISTS project;
-CREATE USER project
-WITH PASSWORD 'project';
+-- DROP USER IF EXISTS project;
+-- CREATE USER project
+-- WITH PASSWORD 'project';
 
-GRANT ALL PRIVILEGES ON DATABASE project TO project;
+-- GRANT ALL PRIVILEGES ON DATABASE project TO project;
 
 
 
