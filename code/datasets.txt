@@ -1,0 +1,4 @@
+https://data.ny.gov/api/views/9a8c-vfzj/rows.csv?accessType=DOWNLOAD&sorting=true
+https://data.ny.gov/api/views/hrvs-fxs2/rows.csv?accessType=DOWNLOAD&sorting=true
+https://data.ny.gov/api/views/qq4h-8p86/rows.csv?accessType=DOWNLOAD&sorting=true
+https://data.ny.gov/api/views/juva-r6g2/rows.csv?accessType=DOWNLOAD&sorting=true
