@@ -130,8 +130,7 @@ def preprocess():
     frames = [county_zip, retail_county_zip, farmer_county_zip, liquor_county_zip]
 
     global_county_zip_code = pd.concat(frames)
-
-
+  
    
     global_county_zip_code.shape
 
@@ -141,15 +140,7 @@ def preprocess():
     
 
 
-    global_county_zip_code.shape
-
-
-
-
-
-    for row in global_county_zip_code:
-        print(row)
-
+    
 
     
     global_county_zip_code.to_csv('./code/datasets/global_county_zip_code.csv')

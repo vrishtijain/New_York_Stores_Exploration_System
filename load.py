@@ -19,18 +19,22 @@ def load_into_database():
     g_county_zip = pd.read_csv('./code/datasets/global_county_zip_code.csv')
 
 
-    g_county_zip = g_county_zip.dropna(subset=['zip'])
+    
     #
-    g_county_zip = g_county_zip[g_county_zip.zip.apply(lambda x: x.isnumeric())]
+    # 181,14074.0,Erie
+    # 484,115510.0,Nassau
     g_county_zip = g_county_zip.dropna(subset=['zip'])
-    g_county_zip['zip'] = g_county_zip['zip'].astype(str).astype(int)
+    g_county_zip = g_county_zip[g_county_zip.zip.apply(lambda x: x.isnumeric())]
+    
+    g_county_zip['zip'] = g_county_zip['zip'].astype(str).astype(float).astype(int)
+    
     g_county_zip = g_county_zip[g_county_zip['zip'] < 100000]
     g_county_zip = g_county_zip.drop_duplicates(subset='zip', keep="first")
     g_county_zip = g_county_zip[['zip', 'county']]
 
     # INSERTTT
     g_county_zip = g_county_zip.set_index('zip', drop=True)
-    #g_county_zip.to_sql('global_county_zip_code', engine, if_exists='append')
+    g_county_zip.to_sql('global_county_zip_code', engine, if_exists='append')
 
 
     # retail_food_stores
@@ -46,12 +50,13 @@ def load_into_database():
 
     # convcert to integer columns
     r_food['zip_code'] = r_food['zip_code'].astype(str).astype(int)
+
     r_food = r_food[r_food['zip_code'] < 100000]
     r_food['square_footage'] = r_food['square_footage'].astype(str).astype(int)
     r_food = r_food.set_index('license', drop=True)
 
     # INSERTTT
-    #r_food.to_sql('retail_food_stores', engine, if_exists='append')
+    r_food.to_sql('retail_food_stores', engine, if_exists='append')
 
 
 
@@ -72,6 +77,9 @@ def load_into_database():
     one_m8 = list(liquor_store['serial_number'][liquor_store['license_class_code'] == '1M8'])
 
     # print(one_m8)
+    # REMOVING 2500828 BECUASE THAT HAD STUPID VALUE
+    liquor_store = liquor_store[~liquor_store['serial_number'].isin(
+        one_m8)]
 
     # convcert to integer columns
     liquor_store = liquor_store[liquor_store.license_class_code.apply(lambda x: x.isnumeric())]
@@ -82,7 +90,7 @@ def load_into_database():
 
 
     # INSERTTT
-    #liquor_store.to_sql('authorised_liquor_store', engine, if_exists='append')
+    liquor_store.to_sql('authorised_liquor_store', engine, if_exists='append')
 
 
 
@@ -112,7 +120,7 @@ def load_into_database():
     # liquor_address = liquor_address[liquor_address['serial_number'] not in one_m8]
     liquor_address = liquor_address.set_index('serial_number', drop=True)
     # INSERTTT
-    #liquor_address.to_sql('liquor_address', engine, if_exists='append')
+    liquor_address.to_sql('liquor_address', engine, if_exists='append')
 
 
 
@@ -132,13 +140,19 @@ def load_into_database():
     # convcert to integer columns
 
     farmers_market['phone'] = farmers_market['phone'].astype(str).astype(int)
+
+  
     farmers_market = farmers_market.dropna(subset=['zip'])
     farmers_market['zip'] = farmers_market['zip'].astype(float).astype(int)
     farmers_market = farmers_market[farmers_market['zip'] < 100000]
+    # print(farmers_market.shape)
+    farmers_market.drop(farmers_market[farmers_market['zip'] == 14074].index, inplace=True)
+    farmers_market.drop(farmers_market[farmers_market['zip'] == 115510].index, inplace=True)
+    # print(farmers_market.shape)
 
     farmers_market = farmers_market.set_index('market_name', drop=True)
     # INSERTTT
-    #farmers_market.to_sql('farmers_market', engine, if_exists='append')
+    farmers_market.to_sql('farmers_market', engine, if_exists='append')
 
 
     # we have to do json :P

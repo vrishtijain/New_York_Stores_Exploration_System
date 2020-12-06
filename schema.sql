@@ -7,6 +7,18 @@
 
 -- GRANT ALL PRIVILEGES ON DATABASE project TO project;
 
+drop table   if exists global_county_zip_code
+CASCADE;
+CREATE TABLE global_county_zip_code
+(
+
+    zip INTEGER CHECK ( zip <100000) PRIMARY KEY,
+    county VARCHAR(20)
+
+
+);
+
+
 
 
 drop table   if exists    retail_food_stores
@@ -95,18 +107,6 @@ CREATE TABLE farmers_market
     latitude DECIMAL,
     longitude DECIMAL,
     FOREIGN KEY  (zip) REFERENCES global_county_zip_code(zip) ON UPDATE CASCADE ON DELETE SET NULL
-);
-
-
-drop table   if exists global_county_zip_code
-CASCADE;
-CREATE TABLE global_county_zip_code
-(
-
-    zip INTEGER CHECK ( zip <100000) PRIMARY KEY,
-    county VARCHAR(20)
-
-
 );
 
 
