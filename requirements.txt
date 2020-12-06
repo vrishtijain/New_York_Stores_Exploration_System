@@ -7,3 +7,4 @@ sqlalchemy
 pymongo
 webbrowser
 geopy
+numpy
